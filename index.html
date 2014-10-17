@@ -15,7 +15,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
     <link rel="stylesheet" href="css/reveal.min.css">
-    <link rel="stylesheet" href="css/theme/serif.css" id="theme">
+    <link rel="stylesheet" href="css/theme/default.css" id="theme">
 
     <!-- For syntax highlighting -->
     <link rel="stylesheet" href="lib/css/zenburn.css">
@@ -34,6 +34,24 @@
     <!--[if lt IE 9]>
     <script src="lib/js/html5shiv.js"></script>
     <![endif]-->
+
+    <!-- add script for sage cells -->
+    <script src="http://sagecell.sagemath.org/static/jquery.min.js"></script>
+    <script src="http://sagecell.sagemath.org/embedded_sagecell.js"></script>
+    <script>
+$(function () {
+    // Make the div with id 'mycell' a Sage cell
+    sagecell.makeSagecell({inputLocation:  '.sage',
+                           template:       sagecell.templates.minimal,
+                           evalButtonText: 'Activate'});
+    // Make *any* div with class 'compute' a Sage cell
+    sagecell.makeSagecell({inputLocation: 'div.compute',
+                           evalButtonText: 'Evaluate'});
+});
+    </script>
+
+
+
   </head>
 
   <body>
@@ -42,10 +60,372 @@
 
       <!-- Any section element inside of this container is displayed as a slide -->
       <div class="slides">
-        <section>
-          Test Slide #1
+        <section >
+<h1>Shorter or Rounder, or More Evenly Bent?</h1>
+<h3> A Visual Tour of Curve Shortening</h3>
 
-        </section>
+<h4>Theron J Hitchman, UNI</h4>
+</section>
+
+
+<section>
+  <section>
+    <h2>Motivation</h2>
+    <div class="sage" style="position:relative; top:0">
+      <script type="text/x-sage">
+var('t u v')
+
+x(u,v) = (3 + cos(u) ) * cos(v)
+y(u,v) = (3 + cos(u) ) * sin(v)
+z(u,v) = sin(u)
+torus = [x(u,v), y(u,v), z(u,v)]
+
+torusline = [x(3*t, t), y(3*t,t), z(3*t,t)]
+
+uwig = 3*t + .1 * cos(15*t) + .05 * cos(30*t)
+vwig = t + .1 * sin(15*t) + .05 * sin(30*t)
+
+wiggleline = [x(uwig, vwig), y(uwig,vwig), z(uwig,vwig)]
+
+wiggle_plot = parametric_plot3d( torus, (u,0,2*pi), (v,0,2*pi), color='yellow', opacity=0.7, aspect_ratio=1, frame=False)
+#wiggle_plot+= parametric_plot3d( torusline, (t,0,2*pi), color='black', thickness=2)
+wiggle_plot+= parametric_plot3d( wiggleline, (t,0,2*pi), color='red', thickness=2, plot_points=1000)
+
+wiggle_plot.show()
+      </script>
+    </div>
+  </section>
+
+
+  <section>
+    <h2>Motivation</h2>
+    <div class="sage" style="position:relative; top:0">
+      <script type="text/x-sage">
+var('t u v')
+
+x(u,v) = (3 + cos(u) ) * cos(v)
+y(u,v) = (3 + cos(u) ) * sin(v)
+z(u,v) = sin(u)
+torus = [x(u,v), y(u,v), z(u,v)]
+
+torusline = [x(3*t, t), y(3*t,t), z(3*t,t)]
+
+uwig = 3*t + .1 * cos(15*t) + .05 * cos(30*t)
+vwig = t + .1 * sin(15*t) + .05 * sin(30*t)
+
+wiggleline = [x(uwig, vwig), y(uwig,vwig), z(uwig,vwig)]
+
+wiggle_plot = parametric_plot3d( torus, (u,0,2*pi), (v,0,2*pi), color='yellow', opacity=0.7, aspect_ratio=1, frame=False)
+wiggle_plot+= parametric_plot3d( torusline, (t,0,2*pi), color='black', thickness=2)
+wiggle_plot+= parametric_plot3d( wiggleline, (t,0,2*pi), color='red', thickness=2, plot_points=1000)
+
+wiggle_plot.show()
+      </script>
+    </div>
+  </section>
+
+  <section>
+  <h2>Motivation</h2>
+  <div>
+  Other Interesing Geometry Problems which are related:
+  <ul>
+  <li>Finding "geodesics" in general spaces</li>
+  <li>Modelling "heat flow"</li>
+  <li>Finding harmonic maps</li>
+  <li>Mean Curvature Flow of surfaces</li>
+  <li>Hamilton's "Ricci Flow" <br />
+  &nbsp;$\rightarrow$ Perelman's work on the Poincaré conjecture</li>
+  </ul>
+  </div>
+  </section>
+</section>
+<section>
+<h3>"Easier" Problem</h3>
+
+<img src='images/wild-curve.png'>
+
+</section>
+
+<section>
+<h2>A Hippopede</h2>
+
+<img src='images/hippopede-static.png'>
+
+</section>
+
+<section>
+  <section>
+    <h2>Parametrized Curves</h2>
+    <img src="images/Hippopede_motion.gif">
+  </section>
+  <section>
+    <h2>Parametrized Curves</h2>
+    <img src="images/parametrized.png">
+  </section>
+  <section>
+    <h2>Parametrized Curves</h2>
+    <img src="images/a_new_param_hippo.gif">
+  </section>
+</section>
+
+
+<section>
+  <section>
+    <h2>Parametrized Curves: Problems</h2>
+
+    <h3> This gives us Calculus. Wooo-Hoo!</h3>
+    <h3> What problems do we inherit?</h3>
+    <h3> &nbsp;</h3>
+    <div class="fragment">
+      The motion may not reflect the curve, so much as some
+      strange wandering along it.
+    </div>
+  </section>
+  <section>
+    <div class="fragment">How far is it to Dallas from Here?</div>
+    <div class="fragment">How far to Houston?</div>
+  </section>
+</section>
+
+
+
+<section>
+<h2>ArcLength Parametrization</h2>
+
+<img width="500" height="500" src="images/arclength.png">
+
+
+</section>
+
+<section>
+<h2>Idea of Curvature</h2>
+
+<h3>We want to make a curve "less bendy."</h3>
+
+<div style="position:relative; top:3em">
+How can we (use Calculus to) measure how much a particular curve bends?
+</div>
+</section>
+
+<section>
+<h2>The Tangent Vector</h2>
+<div style="font-size: 1em; position: relative; top: .25em">
+To find the tangent vector to $$\gamma(t) = (\,x(t), \,y(t)\, ),$$ we simply compute
+$$\gamma'(t) = (\,x'(t),\, y'(t)\,)$$ <emph>and then scale it to make it length $1$.</emph>
+Only the direction matters!
+</div>
+
+<img src="images/tangentvector.png">
+
+</section>
+
+<section>
+<h2>The Normal Vector</h2>
+<h3>
+Now just turn 90 degrees counter-clockwise from the direction you are facing.
+</h3>
+
+<img src="images/normalvect.png">
+
+</section>
+
+<section>
+<h2>We have to have ONE proof</h2>
+<blockquote> Lemma: The derivative of the tangent vector is parallel to the normal vector.
+</blockquote>
+
+<div> Proof: The tangent vectors all have unit length (arclength!), so $T \cdot T = 1$ is constant.
+Hence $$ 0 = T' \cdot T + T \cdot T' = 2 T' \cdot T .$$
+This means $T'$ is orthogonal to $T$, and thus must be parallel to $N$.</div>
+
+</section>
+
+<section>
+<h2>Curvature</h2>
+<div style="position: relative; top: .5em">
+We write $$T' = \kappa N,$$ and call $\kappa$ the <emph>curvature.</emph>
+</div>
+</section>
+
+
+
+
+
+<section>
+<h2>Interpretations of Curvature</h2>
+<div style="position: relative; top: .2em">
+Natural geometric descriptions:
+<ol>
+<li class="fragment"> $\kappa$ is the rate of change of the angle $T$ makes with the $x$ axis.</li>
+<li class="fragment"> $\kappa$ is the reciprocal of the radius of the circle which best approximates
+the curve at that point.</li>
+</ol>
+
+</div>
+</section>
+
+<section>
+<h2>The Frenet-Serret Equations</h2>
+<div style="position: relative; top: 1em">
+$$ \begin{cases} T' & = \kappa N \\
+     N' & = - \kappa T \\
+    \end{cases}$$
+
+</div>
+</section>
+
+<section>
+<h2>Qualitative Meaning of Curvature</h2>
+<img src="images/bettercurvatures.png">
+</section>
+
+<section>
+<h2>Curve Shortening Flow</h2>
+<div style="position: relative; top: .2em">
+<!--We will now move the points on the curve in the direction of their normals, at rates
+given by the curvature $\kappa$.-->
+
+$$ \dfrac{\partial}{\partial s} \gamma_s(t) = \kappa_s(t) N_s(t). $$
+<br />
+Here $t$ moves along each curve, and $s$ is the "flow direction" we wish to generate, changing $s$
+moves us from one curve to another.
+</div>
+
+</section>
+
+<section>
+  <section>
+    <h2>Educated Guess Time: Part One</h2>
+    <div style="position: relative; top: 2em">
+      <h2>What does curve shortening flow do to a line?</h2>
+    </div>
+  </section>
+
+  <section>
+    <h2>Educated Guess Time: Part Two</h2>
+    <div style="position: relative; top: 2em">
+      <h2>What does curve shortening flow do to a circle?<h2>
+    </div>
+  </section>
+</section>
+
+
+<section>
+  <section>
+    <h2>Gage & Hamilton</h2>
+    <div style="position: relative; top: 1em">
+      Suppose that your curve is <emph>convex</emph>, then
+      <ul>
+      <li>CSF makes sense: the differential equation has a solution.</li>
+      <li>In a finite time, the curve shrinks to a single point.</li>
+      <li>As the curve shrinks to a point, it gets rounder.</li>
+      <li>If we rescale so area enclosed is constant, the limit is a circle.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section>
+    <h2>Convex</h2>
+    <img src="images/convex.png">
+  </section>
+
+  <section>
+    <h2>Not Convex</h2>
+    <img src="images/nonconvex.png">
+  </section>
+</section>
+
+<section>
+<h2>Isoperimetric Ratio</h2>
+<div class="fragment">
+A way to test how circular your (simple) curve is:<br />
+If $A$ is the area enclosed, and $L$ is the length, then
+$$ \dfrac{L^2}{A} \geq 4\pi .$$
+</div>
+<div class="fragment">
+  And equality holds exactly when the curve is a circle.
+</div>
+
+</section>
+
+<section>
+  <section>
+    <h3>Some other stuff we know.</h3>
+  </section>
+<section>
+  <h2>Grayson's work</h2>
+  <div style="position: relative; top: 2em">
+    As long as your curve is <emph>simple</emph>, that is, it does not cross itself, then
+    CSF will keep the curve simple, and eventually the CSF makes the curve convex.
+  </div>
+</section>
+
+<section>
+  <h2>Aubresch and Langer Examples</h2>
+  <img height="500" width="500" src="images/al.jpg">
+</section>
+</section>
+
+
+
+<section>
+<h2>Hard questions</h2>
+<div style="position: relative; top: .2em">
+<ul>
+<li>Suppose your curve crosses itself. What does the CSF do to it?
+Can singularities form, past which CSF doesn't make sense?</li>
+<li>What happens if we perturb one of the Aubresch-Langer examples?</li>
+</ul>
+</div>
+</section>
+
+<section>
+  <section>
+    <h2>Easier Questions</h2>
+    <div>
+      Let's ask <emph> easier questions </emph> we still can't solve.
+    </div>
+    <div class="fragment">
+      Can we do something for polygons?
+    </div>
+  </section>
+
+  <section>
+    <h2>Chow-Glickenstein</h2>
+    $$ \dfrac{dB}{dt} = (A-B) + (C-B)$$
+    <div style="position: relative; top: .5em">
+      <img src="images/cg.png">
+    </div>
+  </section>
+
+  <section>
+  <h2>Jecko-Léger: Menger Curvature</h2>
+  <div>
+    $$ \dfrac{dB}{dt} = M(A,B,C) $$
+      <img src="images/JL.png">
+    </div>
+  </section>
+</section>
+
+
+<section>
+<h2>What don't we know about these?</h2>
+
+<div>
+<ul>
+<li>Do convex curves stay convex?</li>
+<li>Do simple curves stay simple?</li>
+<li>Are there special homothetic solutions?</li>
+<li>How stable are the special solutions?</li>
+<li>Can singularities form?</li>
+</ul>
+
+</div>
+</section>
+
+<section>
+<h1>Thank you</h1>
+</section>
 
 
 
