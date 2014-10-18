@@ -72,57 +72,12 @@ $(function () {
 <section>
   <section>
     <h2>Motivation</h2>
-    <div class="sage">
-      <script type="text/x-sage">
-var('t u v')
 
-x(u,v) = (3 + cos(u) ) * cos(v)
-y(u,v) = (3 + cos(u) ) * sin(v)
-z(u,v) = sin(u)
-torus = [x(u,v), y(u,v), z(u,v)]
+    <p>A fancy geometry problem.</p>
+    <p>
+      <a href="https://cloud.sagemath.com/projects/11ed9678-c34a-4d1c-a109-1e3b5e81c909/files/2014-10-17-234919.sagews" target="_blank">Click Here</a>
+    </p>
 
-torusline = [x(3*t, t), y(3*t,t), z(3*t,t)]
-
-uwig = 3*t + .1 * cos(15*t) + .05 * cos(30*t)
-vwig = t + .1 * sin(15*t) + .05 * sin(30*t)
-
-wiggleline = [x(uwig, vwig), y(uwig,vwig), z(uwig,vwig)]
-
-wiggle_plot = parametric_plot3d( torus, (u,0,2*pi), (v,0,2*pi), color='yellow', opacity=0.7, aspect_ratio=1, frame=False)
-#wiggle_plot+= parametric_plot3d( torusline, (t,0,2*pi), color='black', thickness=2)
-wiggle_plot+= parametric_plot3d( wiggleline, (t,0,2*pi), color='red', thickness=2, plot_points=1000)
-
-wiggle_plot.show()
-      </script>
-    </div>
-  </section>
-
-
-  <section>
-    <h2>Motivation</h2>
-    <div class="sage">
-      <script type="text/x-sage">
-var('t u v')
-
-x(u,v) = (3 + cos(u) ) * cos(v)
-y(u,v) = (3 + cos(u) ) * sin(v)
-z(u,v) = sin(u)
-torus = [x(u,v), y(u,v), z(u,v)]
-
-torusline = [x(3*t, t), y(3*t,t), z(3*t,t)]
-
-uwig = 3*t + .1 * cos(15*t) + .05 * cos(30*t)
-vwig = t + .1 * sin(15*t) + .05 * sin(30*t)
-
-wiggleline = [x(uwig, vwig), y(uwig,vwig), z(uwig,vwig)]
-
-wiggle_plot = parametric_plot3d( torus, (u,0,2*pi), (v,0,2*pi), color='yellow', opacity=0.7, aspect_ratio=1, frame=False)
-wiggle_plot+= parametric_plot3d( torusline, (t,0,2*pi), color='black', thickness=2)
-wiggle_plot+= parametric_plot3d( wiggleline, (t,0,2*pi), color='red', thickness=2, plot_points=1000)
-
-wiggle_plot.show()
-      </script>
-    </div>
   </section>
 
   <section>
@@ -140,6 +95,7 @@ wiggle_plot.show()
   </div>
   </section>
 </section>
+
 <section>
 <h3>"Easier" Problem</h3>
 
@@ -208,17 +164,17 @@ wiggle_plot.show()
   </section>
   <section>
     <h1>Calculus?</h1>
-    <img>Put I was told there would be no math here</img>
+    <img height="500" width="650" src="images/nomath.jpg">
   </section>
 </section>
 
 <section>
 <h2>The Tangent Vector</h2>
-<div style="font-size: 1em; position: relative; top: .25em">
+<p>
 To find the tangent vector to $$\gamma(t) = (\,x(t), \,y(t)\, ),$$ we simply compute
 $$\gamma'(t) = (\,x'(t),\, y'(t)\,)$$ <emph>and then scale it to make it length $1$.</emph>
 Only the direction matters!
-</div>
+</p>
 
 <img src="images/tangentvector.png">
 
